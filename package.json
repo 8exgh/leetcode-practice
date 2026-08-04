@@ -1,0 +1,20 @@
+{
+  "name": "leetcode-practice",
+  "version": "1.0.0",
+  "private": true,
+  "description": "LeetCode practice exercises with per-exercise jest tests",
+  "scripts": {
+    "test": "jest",
+    "new": "tsx tools/cli/index.ts"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.12",
+    "@types/node": "^22.5.0",
+    "@types/prompts": "^2.4.9",
+    "jest": "^29.7.0",
+    "prompts": "^2.4.2",
+    "ts-jest": "^29.2.5",
+    "tsx": "^4.19.0",
+    "typescript": "^5.5.4"
+  }
+}
