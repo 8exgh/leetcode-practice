@@ -5,11 +5,11 @@
 ## Test Results
 
 <!-- TEST-RESULTS:START -->
-**1/2** exercises passing (1/3 tests).
+**2/2** exercises passing (7/8 tests).
 
 | Exercise | Status | Tests |
 | --- | --- | --- |
-| easy-two-sum-csharp | ❌ Fail | 0/1 |
+| easy-two-sum-csharp | ✅ Pass | 6/6 |
 | easy-two-sum-typescript | ✅ Pass | 1/2 |
 <!-- TEST-RESULTS:END -->
 
