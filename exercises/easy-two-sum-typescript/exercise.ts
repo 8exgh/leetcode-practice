@@ -52,6 +52,14 @@
  * Rename `solve` (and adjust its signature) to match the LeetCode problem,
  * then update the import in exercise.test.ts accordingly.
  */
-export function solve(...args: unknown[]): unknown {
-  throw new Error("Not implemented");
-}
+export function twoSum(nums: number[], target: number): number[] {
+    for(let i = 0; i < nums.length; i++) {
+        for(let j = 0;j <nums.length; j++) {
+            if(target == nums[i] + nums[j] && i != j) {
+                return [nums[i], nums[j]]
+            }
+        }
+    }
+
+    return [];
+};
