@@ -46,4 +46,5 @@ jobs:
           git diff --cached --quiet || { git commit -m "docs: update test results [skip ci]"; git push; }
 
       - name: Fail the job if any tests failed
-        run: node -e "process.exit(require('./results.json').success && require('./csharp-results.json').success ? 0 : 1)"
+        run: |
+          node -e "process.exit(require('./results.json').success && require('./csharp-results.json').success ? 0 : 1)"
