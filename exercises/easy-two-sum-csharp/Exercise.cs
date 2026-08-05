@@ -57,8 +57,19 @@ namespace LeetCode.Exercise;
 /// </summary>
 public static class Exercise
 {
-    public static object Solve(params object[] args)
+    public static int[] TwoSum(int[] nums, int target)
     {
-        throw new NotImplementedException();
+        for (var i = 0; i < nums.Length; i++)
+        {
+            for (var j = 0; j < nums.Length; j++)
+            {
+                if (target == (nums[i] + nums[j]) && i != j)
+                {
+                    return [i, j];
+                }
+            }
+        }
+        
+        return [];
     }
 }
