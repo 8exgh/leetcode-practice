@@ -20,15 +20,22 @@ jobs:
           node-version: 20
           cache: npm
 
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+
       - name: Install dependencies
         run: npm ci
 
-      - name: Run all exercise tests
+      - name: Run TypeScript exercise tests
         # Don't fail yet — we want the README updated with results either way.
         run: npx jest --json --outputFile=results.json || true
 
+      - name: Run C# exercise tests
+        run: node tools/run-csharp-tests.js csharp-results.json
+
       - name: Update README with test results
-        run: node tools/update-readme.js results.json
+        run: node tools/update-readme.js results.json csharp-results.json
 
       - name: Commit updated README
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
@@ -39,4 +46,4 @@ jobs:
           git diff --cached --quiet || { git commit -m "docs: update test results [skip ci]"; git push; }
 
       - name: Fail the job if any tests failed
-        run: node -e "process.exit(require('./results.json').success ? 0 : 1)"
+        run: node -e "process.exit(require('./results.json').success && require('./csharp-results.json').success ? 0 : 1)"

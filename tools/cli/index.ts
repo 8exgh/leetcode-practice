@@ -2,8 +2,9 @@
  * Interactive CLI for scaffolding a new LeetCode exercise.
  *
  * Usage:
- *   npm run new                    # interactive: search, pick question, pick language
- *   npm run new -- --slug two-sum  # non-interactive: scaffold a known question slug
+ *   npm run new                                  # interactive: search, pick question, pick language
+ *   npm run new -- --slug two-sum                # non-interactive (defaults to typescript)
+ *   npm run new -- --slug two-sum --lang csharp  # non-interactive with explicit language
  *
  * It copies templates/<language>/ into exercises/<difficulty>-<slug>-<language>/
  * and prepends the problem description (fetched from LeetCode) as a comment
@@ -20,8 +21,30 @@ import {
 } from "./leetcode";
 
 const ROOT = path.resolve(__dirname, "..", "..");
-const LANGUAGES = ["typescript"] as const;
+const LANGUAGES = ["typescript", "csharp"] as const;
 type Language = (typeof LANGUAGES)[number];
+
+interface LanguageConfig {
+  /** File in the template that gets the problem description prepended. */
+  exerciseFile: string;
+  /** LeetCode's langSlug, used to look up the official starter snippet. */
+  snippetSlug: string;
+  /** How to run the tests for a scaffolded exercise, shown after scaffolding. */
+  testCommand: (relativeDir: string) => string;
+}
+
+const LANGUAGE_CONFIG: Record<Language, LanguageConfig> = {
+  typescript: {
+    exerciseFile: "exercise.ts",
+    snippetSlug: "typescript",
+    testCommand: (dir) => `npx jest ${dir}`,
+  },
+  csharp: {
+    exerciseFile: "Exercise.cs",
+    snippetSlug: "csharp",
+    testCommand: (dir) => `dotnet test ${dir}`,
+  },
+};
 
 function wrapLines(text: string, width: number): string[] {
   const lines: string[] = [];
@@ -47,7 +70,9 @@ function buildHeaderComment(question: QuestionDetail, language: Language): strin
   const description = question.content
     ? htmlToText(question.content)
     : "(No description available — see the problem page.)";
-  const snippet = question.codeSnippets?.find((s) => s.langSlug === language);
+  const snippet = question.codeSnippets?.find(
+    (s) => s.langSlug === LANGUAGE_CONFIG[language].snippetSlug,
+  );
 
   const body: string[] = [
     `${question.questionFrontendId}. ${question.title}`,
@@ -77,7 +102,7 @@ function scaffoldExercise(question: QuestionDetail, language: Language): string 
   }
   fs.cpSync(templateDir, targetDir, { recursive: true });
 
-  const exerciseFile = path.join(targetDir, "exercise.ts");
+  const exerciseFile = path.join(targetDir, LANGUAGE_CONFIG[language].exerciseFile);
   const existing = fs.readFileSync(exerciseFile, "utf8");
   fs.writeFileSync(exerciseFile, `${buildHeaderComment(question, language)}\n\n${existing}`);
   return targetDir;
@@ -110,10 +135,19 @@ async function pickQuestionInteractively(): Promise<string | null> {
   return slug ?? null;
 }
 
+function readFlag(name: string): string | null {
+  const index = process.argv.indexOf(name);
+  return index !== -1 && process.argv[index + 1] ? process.argv[index + 1] : null;
+}
+
 async function main(): Promise<void> {
-  const slugFlag = process.argv.indexOf("--slug");
-  let slug: string | null =
-    slugFlag !== -1 && process.argv[slugFlag + 1] ? process.argv[slugFlag + 1] : null;
+  let slug = readFlag("--slug");
+  const langFlag = readFlag("--lang");
+
+  if (langFlag && !(LANGUAGES as readonly string[]).includes(langFlag)) {
+    throw new Error(`Unknown language "${langFlag}". Supported: ${LANGUAGES.join(", ")}`);
+  }
+  let language = langFlag as Language | null;
 
   if (!slug) {
     slug = await pickQuestionInteractively();
@@ -123,19 +157,23 @@ async function main(): Promise<void> {
     }
   }
 
-  let language: Language = "typescript";
-  if (slugFlag === -1) {
-    const { picked } = await prompts({
-      type: "select",
-      name: "picked",
-      message: "Pick a language:",
-      choices: LANGUAGES.map((lang) => ({ title: lang, value: lang })),
-    });
-    if (!picked) {
-      console.log("Cancelled.");
-      return;
+  if (!language) {
+    if (readFlag("--slug")) {
+      // Non-interactive invocation without --lang: default to typescript.
+      language = "typescript";
+    } else {
+      const { picked } = await prompts({
+        type: "select",
+        name: "picked",
+        message: "Pick a language:",
+        choices: LANGUAGES.map((lang) => ({ title: lang, value: lang })),
+      });
+      if (!picked) {
+        console.log("Cancelled.");
+        return;
+      }
+      language = picked as Language;
     }
-    language = picked;
   }
 
   console.log(`Fetching "${slug}" from LeetCode...`);
@@ -144,9 +182,9 @@ async function main(): Promise<void> {
   const relative = path.relative(ROOT, targetDir);
 
   console.log(`\nCreated ${relative}/`);
-  console.log(`  - ${relative}/exercise.ts       (implement your solution here)`);
-  console.log(`  - ${relative}/exercise.test.ts  (write tests from the examples)`);
-  console.log(`\nRun its tests with: npx jest ${relative}`);
+  console.log(`  - implement your solution in ${LANGUAGE_CONFIG[language].exerciseFile}`);
+  console.log(`  - write tests from the problem's examples in the test file next to it`);
+  console.log(`\nRun its tests with: ${LANGUAGE_CONFIG[language].testCommand(relative)}`);
 }
 
 main().catch((error) => {

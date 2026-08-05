@@ -1,4 +1,10 @@
 node_modules/
 results.json
+csharp-results.json
 .idea/
 .DS_Store
+
+# .NET
+bin/
+obj/
+TestResults/
