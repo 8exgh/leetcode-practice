@@ -20,6 +20,11 @@
 npm install
 ```
 
+This also activates the versioned git hooks in `.githooks/` (via the `prepare`
+script, which sets `core.hooksPath`). The pre-commit hook runs `npm test`
+(TypeScript + C#) before every commit; bypass it in a pinch with
+`git commit --no-verify`.
+
 ## Start a new exercise
 
 ```sh
@@ -51,9 +56,10 @@ npm run new -- --slug two-sum --lang csharp
 ## Run tests
 
 ```sh
-npm test                                     # all TypeScript exercises
+npm test                                     # everything (TypeScript + C#)
+npm run test:ts                              # all TypeScript exercises
+npm run test:cs                              # all C# exercises
 npx jest exercises/easy-two-sum-typescript   # a single TypeScript exercise
-node tools/run-csharp-tests.js               # all C# exercises
 dotnet test exercises/easy-two-sum-csharp    # a single C# exercise
 ```
 

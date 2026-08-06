@@ -1,0 +1,6 @@
+#!/bin/sh
+# Runs the full test suite (TypeScript + C#) before every commit.
+# Bypass in a pinch with: git commit --no-verify
+
+echo "pre-commit: running npm test..."
+npm test

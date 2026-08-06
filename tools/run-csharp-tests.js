@@ -2,17 +2,21 @@
  * Runs `dotnet test` for every exercises/*-csharp folder and writes a
  * summary to csharp-results.json (same spirit as jest's --json output).
  *
- * Always exits 0 — CI reads the `success` flag from the output file so the
- * README can be updated with failures before the job is marked failed.
+ * Exits 0 even on test failures by default — CI reads the `success` flag from
+ * the output file so the README can be updated with failures before the job
+ * is marked failed. Pass --strict (used by the pre-commit hook) to exit 1
+ * when any test fails.
  *
- * Usage: node tools/run-csharp-tests.js [output-file]
+ * Usage: node tools/run-csharp-tests.js [output-file] [--strict]
  */
 const { spawnSync } = require("node:child_process");
 const fs = require("node:fs");
 const path = require("node:path");
 
 const ROOT = path.join(__dirname, "..");
-const outputFile = process.argv[2] || "csharp-results.json";
+const args = process.argv.slice(2);
+const strict = args.includes("--strict");
+const outputFile = args.find((arg) => !arg.startsWith("--")) || "csharp-results.json";
 const exercisesDir = path.join(ROOT, "exercises");
 
 const folders = fs.existsSync(exercisesDir)
@@ -65,3 +69,7 @@ const summary = {
 };
 fs.writeFileSync(path.join(ROOT, outputFile), JSON.stringify(summary, null, 2));
 console.log(`\nC# results written to ${outputFile} (${suites.length} exercise(s)).`);
+
+if (strict && !summary.success) {
+  process.exit(1);
+}

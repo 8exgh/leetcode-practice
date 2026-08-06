@@ -4,8 +4,11 @@
   "private": true,
   "description": "LeetCode practice exercises with per-exercise jest tests",
   "scripts": {
-    "test": "jest",
-    "new": "tsx tools/cli/index.ts"
+    "test": "npm run test:ts && npm run test:cs",
+    "test:ts": "jest",
+    "test:cs": "node tools/run-csharp-tests.js csharp-results.json --strict",
+    "new": "tsx tools/cli/index.ts",
+    "prepare": "git config core.hooksPath .githooks"
   },
   "devDependencies": {
     "@types/jest": "^29.5.12",
