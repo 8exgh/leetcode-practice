@@ -5,10 +5,11 @@
 ## Test Results
 
 <!-- TEST-RESULTS:START -->
-**3/3** exercises passing (41/42 tests).
+**4/4** exercises passing (156/157 tests).
 
 | Exercise | Status | Tests |
 | --- | --- | --- |
+| easy-roman-to-integer-csharp | ✅ Pass | 115/115 |
 | easy-roman-to-integer-typescript | ✅ Pass | 34/34 |
 | easy-two-sum-csharp | ✅ Pass | 6/6 |
 | easy-two-sum-typescript | ✅ Pass | 1/2 |
