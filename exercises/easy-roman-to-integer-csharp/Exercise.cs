@@ -72,6 +72,7 @@ namespace LeetCode.Exercise;
 /// Rename <c>Solve</c> (and adjust its signature) to match the LeetCode problem,
 /// then update the calls in ExerciseTests.cs accordingly.
 /// </summary>
+<<<<<<< HEAD
 public class Solution {
     public int RomanToInt(string s)
     {
@@ -109,3 +110,12 @@ public class Solution {
          return sum;
      }
  }
+||||||| parent of bd74c87 (easy-longest-common-prefix-typescript / easy-roman-to-integer-csharp)
+=======
+ public class Solution {
+     public int RomanToInt(string s)
+     {
+         return 0;
+     }
+}
+>>>>>>> bd74c87 (easy-longest-common-prefix-typescript / easy-roman-to-integer-csharp)

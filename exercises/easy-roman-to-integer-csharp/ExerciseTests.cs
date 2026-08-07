@@ -5,6 +5,7 @@ namespace LeetCode.Exercise;
 
 public class ExerciseTests
 {
+<<<<<<< HEAD
     [Theory]
 [InlineData("I", 1)]
 [InlineData("II", 2)]
@@ -129,4 +130,16 @@ public void Roman_should_convert_to_integer(string roman, int expected)
 
     actual.Should().Be(expected);
 }
+||||||| parent of bd74c87 (easy-longest-common-prefix-typescript / easy-roman-to-integer-csharp)
+=======
+    [Fact]
+    public void Solves_the_first_example_from_the_problem_description()
+    {
+
+        var sut = new Solution();
+        var actual = sut.RomanToInt("iii");
+        actual.Should().;
+    }
+
+>>>>>>> bd74c87 (easy-longest-common-prefix-typescript / easy-roman-to-integer-csharp)
 }
