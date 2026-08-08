@@ -5,11 +5,13 @@
 ## Test Results
 
 <!-- TEST-RESULTS:START -->
-**6/6** exercises passing (229/230 tests).
+**8/8** exercises passing (317/318 tests).
 
 | Exercise | Status | Tests |
 | --- | --- | --- |
+| easy-longest-common-prefix-csharp | ✅ Pass | 42/42 |
 | easy-longest-common-prefix-typescript | ✅ Pass | 40/40 |
+| easy-palindrome-number-csharp | ✅ Pass | 46/46 |
 | easy-palindrome-number-typescript | ✅ Pass | 33/33 |
 | easy-roman-to-integer-csharp | ✅ Pass | 115/115 |
 | easy-roman-to-integer-typescript | ✅ Pass | 34/34 |
