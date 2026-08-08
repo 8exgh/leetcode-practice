@@ -1,0 +1,11 @@
+﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=26ff0f53_002Dba57_002D4870_002D9c13_002D5f216d3c8516/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="Solves_the_first_example_from_the_problem_description #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+  &lt;TestAncestor&gt;
+    &lt;TestId&gt;xUnit::833C8620-9BD3-FD58-EF72-24F3C1D865AB::net10.0::LeetCode.Exercise.ExerciseTests.Solves_the_first_example_from_the_problem_description&lt;/TestId&gt;
+  &lt;/TestAncestor&gt;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=9914a75b_002D0cc5_002D473c_002D9c82_002Dd20a3c7dd6ac/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="Solves_the_first_example_from_the_problem_description" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+  &lt;TestAncestor&gt;
+    &lt;TestId&gt;xUnit::833C8620-9BD3-FD58-EF72-24F3C1D865AB::net10.0::LeetCode.Exercise.ExerciseTests&lt;/TestId&gt;
+  &lt;/TestAncestor&gt;
+&lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
